@@ -43,7 +43,10 @@ if (!$SkipRegistration) {
 }
 foreach ($entry in $manifest.files) { $file = Join-Path $Destination $entry.path; if (Test-Path -LiteralPath $file) { Remove-Item -LiteralPath $file } }
 Remove-Item -LiteralPath $manifestPath
-$managedParents = @($manifest.files | ForEach-Object { Split-Path -Parent (Join-Path $Destination $_.path) } | Sort-Object -Unique | Sort-Object Length -Descending)
+$managedParents = @($manifest.files | ForEach-Object {
+    $parent = Split-Path -Parent (Join-Path $Destination $_.path)
+    while ($parent.Length -gt $Destination.Length) { $parent; $parent = Split-Path -Parent $parent }
+} | Sort-Object -Unique | Sort-Object Length -Descending)
 foreach ($path in $managedParents) { if ($path -ne $Destination -and (Test-Path -LiteralPath $path) -and @(Get-ChildItem -LiteralPath $path -Force).Count -eq 0) { Remove-Item -LiteralPath $path } }
 if (@(Get-ChildItem -LiteralPath $Destination -Force).Count -eq 0) { Remove-Item -LiteralPath $Destination }
 Write-Output 'Program removed. Receiver inbox, encrypted sessions, sender settings and any reviewed backup executables were preserved. Remove the device separately from your Pushover account if desired.'

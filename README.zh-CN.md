@@ -34,6 +34,12 @@ Agent Notify 本身免费。Pushover 个人使用目前每个接收平台一次�
 
 `queued` 表示 Pushover 接受请求，实际横幅和锁屏手机显示要通过实测确认。新 agent 的接入说明见 [Codex 指南](docs/agent-integration.md)。
 
+## Codex knowledge + skill
+
+源码和发布包都附带 [agent-notify skill](skills/agent-notify/SKILL.md)。它让新的 Codex agent 知道 GitHub 来源、安装入口、如何指导用户注册/付费/取得密钥，以及如何发送获授权的提醒。
+
+运行 `scripts/install-codex-skill.ps1 -SkillRoot '<本机实际的用户 skill 目录>'`。当前官方目录是 `~/.agents/skills`，有些已有客户端使用 `~/.codex/skills` 或 `$CODEX_HOME/skills`；按本机实际发现位置选择一个，避免重复安装。下一轮/新会话确认 skill 出现后，用 **`$agent-notify`** 呼出，也可以自然语言要求完成后提醒。项目只需声明自己的通知范围，发送工具和本机密钥可共用。[接入指南](docs/agent-integration.md)包含可复制的项目授权示例。
+
 ## 数据与已知限制
 
 账户密码不保存；接收会话和发送密钥用当前 Windows 用户的 DPAPI 加密，不能复制到另一台电脑后直接使用。收件箱正文保存在私有目录内，正文不加密。安装、卸载和源码同步都不应携带这些用户数据。

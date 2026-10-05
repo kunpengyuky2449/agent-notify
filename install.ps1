@@ -21,9 +21,10 @@ if (Test-Path -LiteralPath $exe) {
     if ($installedHash -ne $newHash -and (!$ExpectedInstalledSha256 -or $installedHash -ne $ExpectedInstalledSha256)) { throw 'Existing version differs. Exit Agent Notify, review its SHA256, then upgrade with -ExpectedInstalledSha256. No installation file was changed.' }
 }
 if (@(Get-Process AgentNotify -ErrorAction SilentlyContinue | Where-Object { $_.Path -eq $exe }).Count) { throw 'Exit Agent Notify using its tray menu before installing or upgrading.' }
-$relativeFiles = @('app.json','LICENSE','README.md','README.zh-CN.md','install.ps1','uninstall.ps1','Install.cmd','Uninstall.cmd')
+$relativeFiles = @('app.json','LICENSE','README.md','README.zh-CN.md','CONTRIBUTING.md','SECURITY.md','CHANGELOG.md','install.ps1','uninstall.ps1','Install.cmd','Uninstall.cmd')
 $relativeFiles += @(Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'docs') -File -Recurse | ForEach-Object { $_.FullName.Substring($PSScriptRoot.Length + 1) })
-$relativeFiles += @('scripts\Pushover.psm1','scripts\notify.ps1','scripts\setup-pushover.ps1','scripts\setup-pushover.cmd')
+$relativeFiles += @('scripts\Pushover.psm1','scripts\notify.ps1','scripts\setup-pushover.ps1','scripts\setup-pushover.cmd','scripts\install-codex-skill.ps1')
+$relativeFiles += @(Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'skills') -File -Recurse | ForEach-Object { $_.FullName.Substring($PSScriptRoot.Length + 1) })
 $existingManifestPath = Join-Path $Destination 'install.json'
 $managed = @{}
 if (Test-Path -LiteralPath $existingManifestPath) {

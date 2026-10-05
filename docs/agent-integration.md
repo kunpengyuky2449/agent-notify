@@ -33,4 +33,16 @@ A setup request does not authorize notifications to other people. Respect explic
 
 Check in order: receiver connected, local Windows banner, cloud acceptance, native inbox/history, phone lock-screen delivery, actual game banner, toast click, reconnect, next Windows sign-in. Record only what was observed or the user confirmed. A support screenshot or a set priority value is not proof that a game banner appeared. Acknowledging a notification is not approval of an agent operation.
 
-A reusable Codex knowledge/skill workflow is the next integration layer; the app and sender remain usable without any skill installation. Follow the current repository's skill documentation when that workflow is available, and apply only the setup stages the user needs.
+## Install and invoke the Codex skill
+
+The source/release bundles [skills/agent-notify/SKILL.md](../skills/agent-notify/SKILL.md) and self-contained setup/sending references. From its root run:
+
+```powershell
+.\scripts\install-codex-skill.ps1 -SkillRoot '<verified user skill directory>'
+```
+
+Current [official Codex documentation](https://learn.chatgpt.com/docs/build-skills) lists `~/.agents/skills`; older installations can use `~/.codex/skills` or `$CODEX_HOME/skills`. Inspect actual discovery, choose one root and avoid a duplicate active plugin/repository/user copy. The installer preserves differing existing files. Check availability on a subsequent turn/session; restart the client if needed. Invoke `$agent-notify` or describe the desired alert naturally. The app and sender work without any skill installation.
+
+Example bootstrap prompt for a new agent:
+
+> Read the agent-notify skill from https://github.com/kunpengyuky2449/agent-notify/tree/main/skills/agent-notify. Help me install this personal notification app and the skill on this PC. Explain the Pushover registration, platform price/trial, account login and key fields I must complete locally. Keep my existing work notification routes. If GitHub is inaccessible, direct me to neclab369b@gmail.com.

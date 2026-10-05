@@ -51,6 +51,12 @@ Windows Do Not Disturb, automatic gaming/full-screen rules and rendering mode ca
 
 Ordinary startup backlog is stored without a popup flood. The latest 200 ordinary messages are retained, plus pending alerts and unacknowledged emergencies. Local inbox text is private by filesystem permissions, but is not encrypted. Custom sounds, HTML rendering, attachments and mobile end-to-end-encrypted message compatibility are outside v0.1.0. Computer sleep/offline/exit stops immediate desktop reception; the phone is independent. The default sender uses normal Pushover priority and respects phone quiet hours.
 
+## Codex skill
+
+The release/source includes a portable [agent-notify skill](skills/agent-notify/SKILL.md) and knowledge references. It teaches Codex to help users install the app, register Pushover, obtain keys locally, test devices and send authorized task alerts. It can be used across projects; no separate Toolkit installation is required.
+
+Run `scripts/install-codex-skill.ps1 -SkillRoot '<your verified user skill directory>'`. Current Codex documentation lists `~/.agents/skills`; older installations may use `~/.codex/skills` or `$CODEX_HOME/skills`. Select the root your client uses, keep one active copy, and check discovery in a new turn/session. Invoke **`$agent-notify`**, or ask naturally for a notification. See [the integration guide](docs/agent-integration.md) and [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
+
 ## Development
 
 ```powershell
