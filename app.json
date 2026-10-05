@@ -1,0 +1,7 @@
+{
+  "name": "Agent Notify",
+  "version": "0.1.0",
+  "repository": "https://github.com/kunpengyuky2449/agent-notify",
+  "license": "MIT",
+  "target": "windows-x64"
+}
