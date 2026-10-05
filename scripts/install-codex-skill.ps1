@@ -6,13 +6,13 @@ $SkillRoot = [IO.Path]::GetFullPath($SkillRoot).TrimEnd('\')
 if ($SkillRoot -match '[\\/](\.system|plugins[\\/]cache)([\\/]|$)') { throw 'Choose a user-authored skill root, not a provider directory.' }
 $ancestor = $SkillRoot
 while ($ancestor) {
-    if ((Test-Path -LiteralPath $ancestor) -and ((Get-Item -LiteralPath $ancestor).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Linked target preserved; choose a reviewed ordinary user skill root.' }
+    if ((Test-Path -LiteralPath $ancestor) -and ((Get-Item -LiteralPath $ancestor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Linked target preserved; choose a reviewed ordinary user skill root.' }
     $ancestor = Split-Path -Parent $ancestor
 }
 $destination = Join-Path $SkillRoot 'agent-notify'
 $files = @(Get-ChildItem -LiteralPath $source -File -Recurse)
 if (Test-Path -LiteralPath $destination) {
-    if ((Get-Item -LiteralPath $destination).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Linked skill preserved.' }
+    if ((Get-Item -LiteralPath $destination -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Linked skill preserved.' }
     $existing = @(Get-ChildItem -LiteralPath $destination -Force -Recurse)
     if (@($existing | Where-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }).Count) { throw 'Linked skill content preserved.' }
     if (@($existing | Where-Object { !$_.PSIsContainer }).Count -ne $files.Count) { throw 'Existing skill differs; review/reconcile it before replacing.' }
